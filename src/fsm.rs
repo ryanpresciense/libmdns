@@ -8,7 +8,7 @@ use std::task::*;
 use std::collections::VecDeque;
 use std::io;
 use std::marker::PhantomData;
-use std::net::{IpAddr, SocketAddr};
+use std::net::{IpAddr, SocketAddr, };
 use tokio::net::UdpSocket;
 
 use super::{DEFAULT_TTL, MDNS_PORT};
