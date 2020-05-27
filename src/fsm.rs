@@ -255,8 +255,10 @@ impl<AF: AddressFamily> FSM<AF> {
             trace!("sending packet to {:?}", addr);
 
             match self.socket.poll_send_to(ctx, response, addr) {
-                Poll::Ready(Err(ref ioerr)) if ioerr.kind() == std::io::ErrorKind::WouldBlock =>
-                    return Poll::Pending,
+                Poll::Ready(Err(ref ioerr)) if ioerr.kind() == std::io::ErrorKind::WouldBlock => {
+                    warn!("block sending packet {:?}", ioerr);
+                    return Poll::Pending
+                }
                 Poll::Pending => return Poll::Pending,
                 Poll::Ready(Ok(_)) => {
                     self.outgoing.pop_front();
